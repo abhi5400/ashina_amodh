@@ -2559,19 +2559,20 @@ main > section.cp-project-details {
 
 @media (max-width: 768px) {
   .popup-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    max-height: 100vh !important;
-    height: 100vh !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
+    width: 95% !important;
+    max-width: 600px !important;
+    max-height: 90vh !important;
+    height: auto !important;
+    border-radius: 16px !important;
+    margin: 1rem !important;
     flex-direction: column;
   }
 
   .popup-content-wrapper {
     flex-direction: column;
     min-height: auto;
-    height: 100%;
+    height: auto;
+    max-height: calc(90vh - 2rem);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -2580,8 +2581,8 @@ main > section.cp-project-details {
     flex: 0 0 auto;
     padding: 1.5rem 1.25rem;
     min-height: auto;
-    max-height: 40vh;
-    overflow-y: auto;
+    max-height: none;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -2628,24 +2629,29 @@ main > section.cp-project-details {
   .popup-form-section {
     flex: 1;
     padding: 1.5rem 1.25rem;
-    overflow-y: auto;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
   }
 
   .popup-close {
-    top: 0.75rem;
-    right: 0.75rem;
+    top: 0.75rem !important;
+    right: 0.75rem !important;
     width: 44px !important;
     height: 44px !important;
     min-width: 44px !important;
     min-height: 44px !important;
     font-size: 1.75rem !important;
-    background: rgba(196, 31, 36, 0.2) !important;
+    background: rgba(196, 31, 36, 0.25) !important;
     z-index: 10003 !important;
-    position: fixed !important;
+    position: absolute !important;
     cursor: pointer !important;
     pointer-events: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    color: var(--primary) !important;
   }
   
   .popup-close:hover,
@@ -2770,6 +2776,12 @@ main > section.cp-project-details {
 }
 
 @media (max-width: 480px) {
+  .popup-container {
+    width: 92% !important;
+    max-width: 500px !important;
+    margin: 0.75rem !important;
+  }
+  
   .popup-promises {
     padding: 1.25rem 1rem;
   }
@@ -2813,11 +2825,16 @@ main > section.cp-project-details {
     min-width: 44px !important;
     min-height: 44px !important;
     font-size: 1.75rem !important;
-    background: rgba(196, 31, 36, 0.25) !important;
+    background: rgba(196, 31, 36, 0.3) !important;
     z-index: 10003 !important;
-    position: fixed !important;
+    position: absolute !important;
     cursor: pointer !important;
     pointer-events: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    color: var(--primary) !important;
   }
 
   .popup-header {
