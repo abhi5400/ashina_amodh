@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .test-button {
+      background: #c41f24;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .test-button:hover {
+      background: #a0161b;
+    }
+    .test-result {
+      background: #f0f0f0;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid #c41f24;
+    }
+    .success {
+      border-left-color: #28a745;
+      background: #d4edda;
+    }
+    .error {
+      border-left-color: #dc3545;
+      background: #f8d7da;
+    }
+  </style>
+</head>
+<body>
+  <h1>Burger Menu Button Test</h1>
+  
+  <div class="test-result" id="test1">
+    <strong>Test 1:</strong> Checking if button element exists...
+  </div>
+  
+  <div class="test-result" id="test2">
+    <strong>Test 2:</strong> Checking if button is visible...
+  </div>
+  
+  <div class="test-result" id="test3">
+    <strong>Test 3:</strong> Checking if button is clickable...
+  </div>
+  
+  <div class="test-result" id="test4">
+    <strong>Test 4:</strong> Checking if nav element exists...
+  </div>
+  
+  <div class="test-result" id="test5">
+    <strong>Test 5:</strong> Testing click functionality...
+  </div>
+  
+  <button class="test-button" onclick="runTests()">Run Tests</button>
+  
+  <script>
+    function runTests() {
+      // Test 1: Check if button exists
+      const button = document.querySelector('.mobile-menu-toggle');
+      const test1 = document.getElementById('test1');
+      if (button) {
+        test1.innerHTML = '<strong>Test 1:</strong> ✓ Button element found!';
+        test1.classList.add('success');
+      } else {
+        test1.innerHTML = '<strong>Test 1:</strong> ✗ Button element NOT found!';
+        test1.classList.add('error');
+        return;
+      }
+      
+      // Test 2: Check if button is visible
+      const test2 = document.getElementById('test2');
+      const styles = window.getComputedStyle(button);
+      if (styles.display !== 'none' && styles.visibility !== 'hidden' && styles.opacity !== '0') {
+        test2.innerHTML = `<strong>Test 2:</strong> ✓ Button is visible! (display: ${styles.display})`;
+        test2.classList.add('success');
+      } else {
+        test2.innerHTML = `<strong>Test 2:</strong> ✗ Button is NOT visible! (display: ${styles.display}, visibility: ${styles.visibility})`;
+        test2.classList.add('error');
+      }
+      
+      // Test 3: Check if button is clickable
+      const test3 = document.getElementById('test3');
+      if (styles.pointerEvents !== 'none' && styles.cursor !== 'not-allowed') {
+        test3.innerHTML = `<strong>Test 3:</strong> ✓ Button is clickable! (pointer-events: ${styles.pointerEvents}, cursor: ${styles.cursor})`;
+        test3.classList.add('success');
+      } else {
+        test3.innerHTML = `<strong>Test 3:</strong> ✗ Button is NOT clickable!`;
+        test3.classList.add('error');
+      }
+      
+      // Test 4: Check if nav exists
+      const nav = document.querySelector('.cp-nav nav');
+      const test4 = document.getElementById('test4');
+      if (nav) {
+        test4.innerHTML = '<strong>Test 4:</strong> ✓ Nav element found!';
+        test4.classList.add('success');
+      } else {
+        test4.innerHTML = '<strong>Test 4:</strong> ✗ Nav element NOT found!';
+        test4.classList.add('error');
+        return;
+      }
+      
+      // Test 5: Test click
+      const test5 = document.getElementById('test5');
+      const initialActive = nav.classList.contains('active');
+      button.click();
+      setTimeout(() => {
+        const afterClick = nav.classList.contains('active');
+        if (afterClick !== initialActive) {
+          test5.innerHTML = '<strong>Test 5:</strong> ✓ Click functionality works! Menu toggled.';
+          test5.classList.add('success');
+        } else {
+          test5.innerHTML = '<strong>Test 5:</strong> ✗ Click functionality NOT working! Menu did not toggle.';
+          test5.classList.add('error');
+        }
+      }, 100);
+    }
+    
+    // Auto-run tests when page loads
+    window.addEventListener('load', () => {
+      setTimeout(runTests, 500);
+    });
+  </script>
+</body>
+</html>
+
