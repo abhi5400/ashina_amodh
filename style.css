@@ -355,9 +355,11 @@ main > section.cp-project-details {
   }
   
   .cp-top-actions a i {
-    font-size: 1em;
+    font-size: clamp(0.85rem, 2vw, 1rem);
     color: inherit;
     flex-shrink: 0;
+    width: auto;
+    height: auto;
   }
   
   .cp-top-actions a:hover i,
@@ -408,10 +410,10 @@ main > section.cp-project-details {
 
 .cp-top-actions i {
   color: var(--primary);
-  font-size: 1em;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   flex-shrink: 0;
-  width: 1em;
-  height: 1em;
+  width: auto;
+  height: auto;
 }
 
 .cp-nav {
@@ -964,9 +966,9 @@ main > section.cp-project-details {
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.4);
+  width: clamp(44px, 7vw, 56px);
+  height: clamp(44px, 7vw, 56px);
   color: #fff;
-  width: 56px;
-  height: 56px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -976,6 +978,7 @@ main > section.cp-project-details {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(15px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .slide-nav:hover {
@@ -1433,22 +1436,21 @@ main > section.cp-project-details {
 .cp-amenities .amenity-card img,
 .cp-amenities .amenity-card i,
 .cp-amenities .amenity-card svg {
-  width: 60px;
-  height: 60px;
+  width: clamp(40px, 8vw, 60px);
+  height: clamp(40px, 8vw, 60px);
   object-fit: contain;
   margin: 0 auto 1rem;
   display: block;
 }
 
 .cp-amenities .amenity-card i {
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-text-stroke: 2.5px #ff6b35;
+  -webkit-text-stroke: clamp(2px, 0.3vw, 2.5px) #ff6b35;
   -webkit-text-fill-color: transparent;
-  text-stroke: 2.5px #ff6b35;
   paint-order: stroke fill;
 }
 
@@ -1785,7 +1787,7 @@ main > section.cp-project-details {
 }
 
 .cp-gallery .download-card i {
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   color: var(--primary);
   margin-bottom: 1rem;
   display: block;
@@ -1870,6 +1872,7 @@ main > section.cp-project-details {
 
 .play-badge i {
   color: #ff4b51;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
 .video-card iframe,
@@ -2062,6 +2065,20 @@ main > section.cp-project-details {
   margin: 1rem 0;
   display: grid;
   gap: 0.5rem;
+}
+
+.cp-contact aside ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cp-contact aside ul li i {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--primary);
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
 }
 
 .cp-contact iframe {
@@ -2475,6 +2492,8 @@ main > section.cp-project-details {
 
 .contact-info i {
   color: var(--primary);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  flex-shrink: 0;
 }
 
 .popup-form-section .form-hint {
@@ -2515,7 +2534,7 @@ main > section.cp-project-details {
 }
 
 .popup-success .success-icon i {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   color: #2f855a;
 }
 
@@ -2733,7 +2752,7 @@ main > section.cp-project-details {
   }
 
   .popup-success .success-icon i {
-    font-size: 2.5rem;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
   }
 
   .popup-success h3 {
@@ -2910,6 +2929,9 @@ main > section.cp-project-details {
   right: 30px;
   background: rgba(255, 255, 255, 0.1);
   border: none;
+  width: clamp(40px, 6vw, 50px);
+  height: clamp(40px, 6vw, 50px);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   color: #fff;
   font-size: 3rem;
   width: 50px;
@@ -2936,6 +2958,12 @@ main > section.cp-project-details {
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.1);
   border: none;
+  width: clamp(44px, 7vw, 60px);
+  height: clamp(44px, 7vw, 60px);
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   font-size: 3rem;
   width: 60px;
@@ -3333,9 +3361,9 @@ main > section.cp-project-details {
   }
   
   .slide-nav {
-    width: 44px;
-    height: 44px;
-    font-size: 1rem;
+    width: clamp(40px, 6vw, 44px);
+    height: clamp(40px, 6vw, 44px);
+    font-size: clamp(0.9rem, 2vw, 1rem);
   }
   
   .slide-nav.prev {
@@ -3416,9 +3444,14 @@ main > section.cp-project-details {
   .cp-amenities .amenity-card img,
   .cp-amenities .amenity-card i,
   .cp-amenities .amenity-card svg {
-    width: 50px;
-    height: 50px;
+    width: clamp(35px, 7vw, 50px);
+    height: clamp(35px, 7vw, 50px);
     margin-bottom: 0.75rem;
+  }
+  
+  .cp-amenities .amenity-card i {
+    font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+    -webkit-text-stroke: clamp(1.5px, 0.25vw, 2px) #ff6b35;
   }
   
   .cp-amenities .amenity-card h3 {
@@ -3515,16 +3548,16 @@ main > section.cp-project-details {
   .lightbox-close {
     top: 10px;
     right: 15px;
-    width: 40px;
-    height: 40px;
-    font-size: 2rem;
+    width: clamp(36px, 6vw, 40px);
+    height: clamp(36px, 6vw, 40px);
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
   }
   
   .lightbox-prev,
   .lightbox-next {
-    width: 50px;
-    height: 50px;
-    font-size: 2rem;
+    width: clamp(40px, 6.5vw, 50px);
+    height: clamp(40px, 6.5vw, 50px);
+    font-size: clamp(1.1rem, 2.5vw, 2rem);
   }
   
   .lightbox-prev {
@@ -3705,9 +3738,9 @@ main > section.cp-project-details {
   }
   
   .slide-nav {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+    width: clamp(36px, 5.5vw, 40px);
+    height: clamp(36px, 5.5vw, 40px);
+    font-size: clamp(0.85rem, 1.8vw, 0.9rem);
   }
   
   .slide-nav.prev {
