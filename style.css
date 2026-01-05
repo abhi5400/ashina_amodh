@@ -2559,12 +2559,12 @@ main > section.cp-project-details {
 
 @media (max-width: 768px) {
   .popup-container {
-    width: 95% !important;
-    max-width: 600px !important;
-    max-height: 90vh !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 85vh !important;
     height: auto !important;
     border-radius: 16px !important;
-    margin: 1rem !important;
+    margin: 1rem auto !important;
     flex-direction: column;
   }
 
@@ -2572,7 +2572,7 @@ main > section.cp-project-details {
     flex-direction: column;
     min-height: auto;
     height: auto;
-    max-height: calc(90vh - 2rem);
+    max-height: calc(85vh - 2rem);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -2628,7 +2628,7 @@ main > section.cp-project-details {
 
   .popup-form-section {
     flex: 1;
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1rem;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
@@ -2777,9 +2777,10 @@ main > section.cp-project-details {
 
 @media (max-width: 480px) {
   .popup-container {
-    width: 92% !important;
-    max-width: 500px !important;
-    margin: 0.75rem !important;
+    width: 88% !important;
+    max-width: 420px !important;
+    margin: 0.75rem auto !important;
+    max-height: 85vh !important;
   }
   
   .popup-promises {
