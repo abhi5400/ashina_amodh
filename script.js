@@ -868,4 +868,79 @@ Project: Ashiana Amodh - Senior Living
   cards.forEach(card => {
     observer.observe(card);
   });
+  
+  // Home cards horizontal scroll buttons
+  const homeGrid = document.querySelector('.cp-homes .home-grid');
+  const scrollLeftBtn = document.querySelector('.home-scroll-left');
+  const scrollRightBtn = document.querySelector('.home-scroll-right');
+  
+  if (homeGrid && scrollLeftBtn && scrollRightBtn) {
+    // Function to update button visibility
+    const updateButtonVisibility = () => {
+      const isMobile = window.innerWidth <= 768;
+      
+      if (!isMobile) {
+        scrollLeftBtn.classList.add('hidden');
+        scrollRightBtn.classList.add('hidden');
+        return;
+      }
+      
+      const scrollLeft = homeGrid.scrollLeft;
+      const scrollWidth = homeGrid.scrollWidth;
+      const clientWidth = homeGrid.clientWidth;
+      const maxScroll = scrollWidth - clientWidth;
+      
+      // Show/hide left button
+      if (scrollLeft <= 10) {
+        scrollLeftBtn.classList.add('hidden');
+      } else {
+        scrollLeftBtn.classList.remove('hidden');
+      }
+      
+      // Show/hide right button
+      if (scrollLeft >= maxScroll - 10) {
+        scrollRightBtn.classList.add('hidden');
+      } else {
+        scrollRightBtn.classList.remove('hidden');
+      }
+    };
+    
+    // Scroll left function
+    const scrollLeft = () => {
+      const cardWidth = homeGrid.querySelector('.home-card')?.offsetWidth || 0;
+      const gap = 16; // 1rem gap
+      const scrollAmount = cardWidth + gap;
+      homeGrid.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+      });
+    };
+    
+    // Scroll right function
+    const scrollRight = () => {
+      const cardWidth = homeGrid.querySelector('.home-card')?.offsetWidth || 0;
+      const gap = 16; // 1rem gap
+      const scrollAmount = cardWidth + gap;
+      homeGrid.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    };
+    
+    // Event listeners
+    scrollLeftBtn.addEventListener('click', scrollLeft);
+    scrollRightBtn.addEventListener('click', scrollRight);
+    
+    // Update on scroll
+    homeGrid.addEventListener('scroll', updateButtonVisibility);
+    
+    // Update on resize
+    window.addEventListener('resize', updateButtonVisibility);
+    
+    // Initial check
+    updateButtonVisibility();
+    
+    // Check after a short delay to ensure layout is complete
+    setTimeout(updateButtonVisibility, 100);
+  }
 });
