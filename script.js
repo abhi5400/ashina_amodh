@@ -943,4 +943,52 @@ Project: Ashiana Amodh - Senior Living
     // Check after a short delay to ensure layout is complete
     setTimeout(updateButtonVisibility, 100);
   }
+
+  // Virtual Tour Modal
+  const virtualTourBtn = document.getElementById('virtualTourBtn');
+  const virtualTourModal = document.getElementById('virtualTourModal');
+  const virtualTourCloseBtn = document.getElementById('virtualTourCloseBtn');
+  const virtualTourVideo = document.getElementById('virtualTourVideo');
+  const virtualTourOverlay = document.querySelector('.virtual-tour-overlay');
+
+  // Virtual tour video URL - Update this with your actual virtual tour video URL
+  const virtualTourVideoUrl = 'https://www.youtube.com/embed/63R4pblOonE?autoplay=1';
+
+  function openVirtualTour() {
+    if (virtualTourModal && virtualTourVideo) {
+      virtualTourVideo.src = virtualTourVideoUrl;
+      virtualTourModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeVirtualTour() {
+    if (virtualTourModal && virtualTourVideo) {
+      virtualTourModal.classList.remove('active');
+      virtualTourVideo.src = ''; // Stop video when closing
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (virtualTourBtn) {
+    virtualTourBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openVirtualTour();
+    });
+  }
+
+  if (virtualTourCloseBtn) {
+    virtualTourCloseBtn.addEventListener('click', closeVirtualTour);
+  }
+
+  if (virtualTourOverlay) {
+    virtualTourOverlay.addEventListener('click', closeVirtualTour);
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && virtualTourModal && virtualTourModal.classList.contains('active')) {
+      closeVirtualTour();
+    }
+  });
 });
