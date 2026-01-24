@@ -27,12 +27,14 @@ html {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -73,6 +75,7 @@ table, pre, code {
 /* Zoom-responsive container */
 body {
   overflow-x: hidden;
+  overflow-y: auto;
   max-width: 100vw;
   width: 100%;
   margin: 0;
@@ -94,6 +97,26 @@ section,
   min-width: 0;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* Ensure main element doesn't create its own scrollbar */
+main,
+#main-content {
+  overflow-y: visible !important;
+  overflow-x: hidden;
+  height: auto;
+  max-height: none;
+}
+
+/* Prevent popup and modal elements from creating scrollbars when inactive */
+.popup-modal:not(.active),
+.virtual-tour-modal:not(.active) {
+  overflow: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
 }
 
 img, video, iframe {
@@ -365,6 +388,8 @@ main > section.cp-project-details {
   border-bottom: 1px solid rgba(57, 57, 57, 0.05);
   flex-wrap: wrap;
   gap: 0.5rem;
+  border-radius: 12px;
+  margin: 0.5rem clamp(1rem, 2vw, 1.5rem);
 }
 
 @media (max-width: 768px) {
@@ -449,7 +474,7 @@ main > section.cp-project-details {
 
 .cp-topbar p {
   margin: 0;
-  font-weight: 500;
+  font-weight: 700;
   flex-shrink: 1;
   min-width: 0;
 }
@@ -457,7 +482,7 @@ main > section.cp-project-details {
 .cp-top-actions {
   display: flex;
   gap: clamp(0.75rem, 2vw, 1.5rem);
-  font-weight: 500;
+  font-weight: 600;
   flex-shrink: 0;
   flex-wrap: wrap;
 }
@@ -1035,7 +1060,7 @@ main > section.cp-project-details {
 }
 
 .feature-tag {
-  background: rgba(255, 107, 53, 0.9);
+  background: rgba(211, 47, 47, 0.9);
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 999px;
@@ -1043,6 +1068,7 @@ main > section.cp-project-details {
   font-weight: 600;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: inline-block;
 }
 
 .slide-nav {
@@ -1410,9 +1436,8 @@ main > section.cp-project-details {
 }
 
 .home-card a::after {
-  content: '\\f019';
-  font-family: \"Font Awesome 6 Free\";
-  font-weight: 900;
+  content: '';
+  display: none;
 }
 
 .home-card a:hover,
@@ -2397,24 +2422,38 @@ main > section.cp-project-details {
 
 /* Popup Modal Styles */
 .popup-modal {
-  display: none;
+  display: none !important;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10000;
+  width: 0;
+  height: 0;
+  z-index: -1;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .popup-modal.active {
-  display: flex;
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 10000 !important;
   opacity: 1;
   visibility: visible;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+body.popup-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .popup-overlay {
@@ -2431,13 +2470,12 @@ main > section.cp-project-details {
   position: relative;
   width: 90%;
   max-width: 900px;
-  max-height: 90vh;
+  max-height: 85vh;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   z-index: 10001;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   transform: scale(0.9) translateY(20px);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -2489,7 +2527,8 @@ main > section.cp-project-details {
   width: 100%;
   flex: 1;
   min-height: 0;
-  overflow: visible;
+  overflow: hidden;
+  max-height: calc(85vh - 60px);
 }
 
 .popup-promises {
@@ -2497,18 +2536,19 @@ main > section.cp-project-details {
   background: #d32f2f;
   border-right: 1px solid #e0e0e0;
   color: #fff;
-  padding: 2.5rem 2rem;
+  padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   border-radius: 24px 0 0 24px;
+  min-height: 0;
 }
 
 .popup-logo {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -2524,6 +2564,32 @@ main > section.cp-project-details {
   font-style: italic;
   margin: 0;
   font-weight: 400;
+}
+
+.we-promise-section {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.we-promise-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  width: 100%;
+}
+
+.promise-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .popup-promises h3 {
@@ -2552,19 +2618,51 @@ main > section.cp-project-details {
   backdrop-filter: none;
 }
 
+.we-promise-section .promise-item {
+  justify-content: flex-start;
+  padding: 0.5rem 0;
+}
+
 .promise-icon {
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border-radius: 0;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.we-promise-section .promise-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .promise-icon i {
   font-size: 1.5rem;
+  color: #fff;
+}
+
+.we-promise-section .promise-icon i {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.promise-text {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: left;
+}
+
+.we-promise-section .promise-text {
+  font-size: 1rem;
+  font-weight: 600;
   color: #fff;
 }
 
@@ -2577,9 +2675,10 @@ main > section.cp-project-details {
 
 .popup-form-section {
   flex: 1;
-  padding: 2.5rem;
-  overflow: visible;
+  padding: 1rem 1.25rem;
+  overflow: hidden;
   border-radius: 0 24px 24px 0;
+  min-height: 0;
 }
 
 .popup-header {
@@ -2844,8 +2943,8 @@ main > section.cp-project-details {
 .popup-header-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 2rem;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
   border-bottom: 1px solid #e0e0e0;
   background: #fff;
   border-radius: 24px 24px 0 0;
@@ -2853,9 +2952,7 @@ main > section.cp-project-details {
 }
 
 .popup-logo-small {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: none;
 }
 
 .popup-logo-small img {
@@ -2871,8 +2968,25 @@ main > section.cp-project-details {
   font-weight: 400;
 }
 
+.popup-header-title {
+  width: 100%;
+  text-align: center;
+}
+
+.popup-header-title h2 {
+  margin: 0;
+  color: #1f1f1f;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.best-offers-highlight {
+  color: #d32f2f;
+  font-weight: 700;
+}
+
 .popup-form-section .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .popup-form-section .form-group label {
@@ -2970,8 +3084,8 @@ main > section.cp-project-details {
 }
 
 .popup-form-section .form-actions {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .popup-form-section .form-actions .btn {
@@ -3108,9 +3222,27 @@ main > section.cp-project-details {
     position: relative;
   }
 
-  .popup-promises .popup-promo-banner {
-    margin-top: 1.5rem;
-    margin-bottom: 3rem;
+  .we-promise-section {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+  }
+
+  .we-promise-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .we-promise-section .promise-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .we-promise-section .promise-icon i {
+    font-size: 1.5rem;
+  }
+
+  .we-promise-section .promise-text {
+    font-size: 1rem;
   }
 
   .popup-contact-favicons {
@@ -3551,24 +3683,31 @@ main > section.cp-project-details {
 
 /* Virtual Tour Modal Styles */
 .virtual-tour-modal {
-  display: none;
+  display: none !important;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10005;
+  width: 0;
+  height: 0;
+  z-index: -1;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .virtual-tour-modal.active {
-  display: flex;
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 10005 !important;
   opacity: 1;
   visibility: visible;
+  overflow: hidden;
+  pointer-events: auto;
 }
 
 .virtual-tour-overlay {
@@ -3584,9 +3723,9 @@ main > section.cp-project-details {
 .virtual-tour-container {
   position: relative;
   width: 90%;
-  max-width: 1200px;
-  max-height: 90vh;
-  background: #000;
+  max-width: 650px;
+  max-height: 85vh;
+  background: #fff;
   border-radius: 16px;
   overflow: hidden;
   z-index: 10006;
@@ -3597,9 +3736,9 @@ main > section.cp-project-details {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  color: #1f1f1f;
   font-size: 2rem;
   width: 50px;
   height: 50px;
@@ -3613,39 +3752,150 @@ main > section.cp-project-details {
 }
 
 .virtual-tour-close:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.15);
   transform: scale(1.1);
 }
 
 .virtual-tour-content {
-  padding: 2rem;
-  text-align: center;
+  padding: 2.5rem;
+  text-align: left;
+  background: #fff;
+  color: #1f1f1f;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .virtual-tour-content h2 {
-  color: #fff;
+  color: #1f1f1f;
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   font-weight: 700;
+  text-align: center;
 }
 
-.virtual-tour-video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
+.virtual-tour-intro {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
 }
 
-.virtual-tour-video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
+#virtualTourForm .form-group {
+  margin-bottom: 1.5rem;
+}
+
+#virtualTourForm label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #1f1f1f;
+  font-size: 0.95rem;
+}
+
+#virtualTourForm input[type="text"],
+#virtualTourForm input[type="email"],
+#virtualTourForm input[type="tel"],
+#virtualTourForm textarea {
   width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 12px;
+  padding: 0.875rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#virtualTourForm input[type="text"]:focus,
+#virtualTourForm input[type="email"]:focus,
+#virtualTourForm input[type="tel"]:focus,
+#virtualTourForm textarea:focus {
+  outline: none;
+  border-color: #d32f2f;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+}
+
+#virtualTourForm .phone-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#virtualTourForm .country-code {
+  flex: 0 0 140px;
+  padding: 0.875rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+#virtualTourForm .phone-input-wrapper input {
+  flex: 1;
+}
+
+#virtualTourForm .checkbox-group {
+  margin-top: 1.5rem;
+}
+
+#virtualTourForm .checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+#virtualTourForm .checkbox-label input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: auto;
+  cursor: pointer;
+}
+
+#virtualTourForm .checkbox-text {
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+#virtualTourForm .form-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+#virtualTourFormAlert {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  display: none;
+}
+
+#virtualTourFormAlert.show {
+  display: block;
+}
+
+.virtual-tour-success {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.virtual-tour-success .success-icon {
+  font-size: 4rem;
+  color: #2f855a;
+  margin-bottom: 1rem;
+}
+
+.virtual-tour-success h3 {
+  color: #1f1f1f;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.virtual-tour-success p {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
@@ -3660,7 +3910,12 @@ main > section.cp-project-details {
 
   .virtual-tour-content h2 {
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .virtual-tour-intro {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
   }
 
   .virtual-tour-close {
@@ -3828,7 +4083,10 @@ main > section.cp-project-details {
     max-width: 100%;
     min-width: 0;
     overflow-x: hidden;
+    overflow-y: visible !important;
     box-sizing: border-box;
+    height: auto;
+    max-height: none;
   }
   
   main > section {
@@ -4588,7 +4846,10 @@ main > section.cp-project-details {
     max-width: 100%;
     min-width: 0;
     overflow-x: hidden;
+    overflow-y: visible !important;
     box-sizing: border-box;
+    height: auto;
+    max-height: none;
   }
   
   main > section {

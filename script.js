@@ -515,6 +515,7 @@ Project: Ashiana Amodh - Senior Living
     console.log('Opening popup...', enquiryPopup);
     if (enquiryPopup) {
       enquiryPopup.classList.add('active');
+      document.body.classList.add('popup-open');
       document.body.style.overflow = 'hidden';
       isFormSubmitted = false;
       // Reset form and show form, hide success message
@@ -553,6 +554,7 @@ Project: Ashiana Amodh - Senior Living
     if (enquiryPopup) {
       // Remove active class to trigger close animation
       enquiryPopup.classList.remove('active');
+      document.body.classList.remove('popup-open');
       
       // Remove all inline styles so CSS can take over
       enquiryPopup.style.display = '';
@@ -561,6 +563,9 @@ Project: Ashiana Amodh - Senior Living
       
       // Restore body scroll
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
       isFormSubmitted = false;
       
       // Force hide after animation completes
@@ -590,12 +595,6 @@ Project: Ashiana Amodh - Senior Living
 
   // Make openPopup globally available for inline handlers
   window.openEnquiryPopup = openPopup;
-
-  // Test: Open popup after 500ms for immediate visibility (REMOVE IN PRODUCTION)
-  setTimeout(() => {
-    console.log('Auto-opening popup for testing...');
-    openPopup();
-  }, 500);
 
   // Close popup on close button click
   if (popupCloseBtn) {
@@ -948,24 +947,41 @@ Project: Ashiana Amodh - Senior Living
   const virtualTourBtn = document.getElementById('virtualTourBtn');
   const virtualTourModal = document.getElementById('virtualTourModal');
   const virtualTourCloseBtn = document.getElementById('virtualTourCloseBtn');
-  const virtualTourVideo = document.getElementById('virtualTourVideo');
   const virtualTourOverlay = document.querySelector('.virtual-tour-overlay');
-
-  // Virtual tour video URL - Update this with your actual virtual tour video URL
-  const virtualTourVideoUrl = 'https://www.youtube.com/embed/63R4pblOonE?autoplay=1';
+  const virtualTourForm = document.getElementById('virtualTourForm');
+  const virtualTourFormAlert = document.getElementById('virtualTourFormAlert');
+  const virtualTourSuccessMessage = document.getElementById('virtualTourSuccessMessage');
+  const closeVirtualTourAfterSuccess = document.getElementById('closeVirtualTourAfterSuccess');
 
   function openVirtualTour() {
-    if (virtualTourModal && virtualTourVideo) {
-      virtualTourVideo.src = virtualTourVideoUrl;
+    if (virtualTourModal) {
       virtualTourModal.classList.add('active');
       document.body.style.overflow = 'hidden';
+      // Reset form and show form, hide success message
+      if (virtualTourForm) {
+        virtualTourForm.reset();
+        virtualTourForm.style.display = 'block';
+      }
+      if (virtualTourSuccessMessage) {
+        virtualTourSuccessMessage.style.display = 'none';
+      }
+      if (virtualTourFormAlert) {
+        virtualTourFormAlert.textContent = '';
+        virtualTourFormAlert.classList.remove('show');
+      }
+      // Focus on first input
+      setTimeout(() => {
+        const firstInput = virtualTourForm?.querySelector('input[name="name"]');
+        if (firstInput) {
+          firstInput.focus();
+        }
+      }, 300);
     }
   }
 
   function closeVirtualTour() {
-    if (virtualTourModal && virtualTourVideo) {
+    if (virtualTourModal) {
       virtualTourModal.classList.remove('active');
-      virtualTourVideo.src = ''; // Stop video when closing
       document.body.style.overflow = '';
     }
   }
@@ -991,4 +1007,74 @@ Project: Ashiana Amodh - Senior Living
       closeVirtualTour();
     }
   });
+
+  // Virtual Tour Form Validation
+  const validateVirtualTourForm = (data) => {
+    if (!data.name || !data.email || !data.phone) {
+      return 'Please complete all required fields.';
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      return 'Enter a valid email address.';
+    }
+    const phoneNumber = data.phone.replace(/[^\d]/g, '');
+    if (phoneNumber.length < 8 || phoneNumber.length > 15) {
+      return 'Enter a valid phone number.';
+    }
+    const consentCheckbox = document.getElementById('vtConsent');
+    if (!consentCheckbox || !consentCheckbox.checked) {
+      return 'Please accept the consent to continue.';
+    }
+    return '';
+  };
+
+  // Virtual Tour Form Submission
+  if (virtualTourForm) {
+    virtualTourForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(virtualTourForm);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Validate before combining country code
+      const error = validateVirtualTourForm(data);
+      if (error) {
+        virtualTourFormAlert.textContent = error;
+        virtualTourFormAlert.style.color = '#c41f24';
+        virtualTourFormAlert.classList.add('show');
+        virtualTourFormAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+
+      // Combine country code with phone number after validation
+      const countryCode = data.country_code || '+91';
+      const phoneNumber = data.phone || '';
+      data.phone = countryCode + ' ' + phoneNumber;
+
+      // Hide alert
+      virtualTourFormAlert.classList.remove('show');
+      
+      // Show success message
+      virtualTourForm.style.display = 'none';
+      virtualTourSuccessMessage.style.display = 'block';
+      
+      // Log form data (for now, will be connected to EmailJS later)
+      console.log('Virtual Tour Form submitted:', {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: data.message || 'Not provided',
+        consent: 'Accepted'
+      });
+      
+      // Scroll to success message
+      virtualTourSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  // Close virtual tour after success
+  if (closeVirtualTourAfterSuccess) {
+    closeVirtualTourAfterSuccess.addEventListener('click', () => {
+      closeVirtualTour();
+    });
+  }
 });

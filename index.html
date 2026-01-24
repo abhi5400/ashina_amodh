@@ -691,7 +691,7 @@
         <div id="formAlert" role="status"></div>
       </div>
       <aside>
-        <h3>Visit Us</h3>
+        <h3>Visit Ashiana Amodh</h3>
         <p>75/2/3, 76, 77/2 Hissa No. 2-5, Mauje-Varale, Taluka Maval, Pune 410507</p>
         <ul>
           <li><i class="fa-solid fa-phone"></i><a href="tel:+918619505595">+91 861 950 5595</a></li>
@@ -756,57 +756,28 @@
         <div class="popup-promises">
           <div class="popup-logo">
             <img src="assets/logo@logo.png" alt="Ashiana Housing logo">
-            <p class="logo-tagline">you are in safe hands</p>
           </div>
-          <div class="popup-promo-banner">
-            <div class="promo-banner-top">
-              <p>Booking Open: Limited Time Only</p>
-            </div>
-            <div class="promo-content">
-              <h3>Ashiana Amodh At Talegaon</h3>
-              <p class="promo-subtitle">At Talegaon, Pune By Ashiana Housing Ltd.</p>
-              <ul class="promo-features">
-                <li>
-                  <i class="fa-solid fa-home rotating-icon"></i>
-                  <span>Ashiana Amodh Pune - Premium Senior-Friendly Homes</span>
-                </li>
-                <li>
-                  <i class="fa-solid fa-shield-halved rotating-icon"></i>
-                  <span>Safe & senior-friendly homes</span>
-                </li>
-                <li>
-                  <i class="fa-solid fa-heart-pulse rotating-icon"></i>
-                  <span>24/7 medical care & support</span>
-                </li>
-                <li>
-                  <i class="fa-solid fa-chess rotating-icon"></i>
-                  <span>Clubhouse, hobbies & activities</span>
-                </li>
-                <li>
-                  <i class="fa-solid fa-utensils rotating-icon"></i>
-                  <span>Healthy dining for seniors</span>
-                </li>
-                <li>
-                  <i class="fa-solid fa-tree rotating-icon"></i>
-                  <span>Green gardens & walking tracks</span>
-                </li>
-                <li>
-                  <i class="fa-solid fa-person-swimming rotating-icon"></i>
-                  <span>Yoga, fitness & swimming pool</span>
-                </li>
-              </ul>
-              <div class="spot-booking-box">
-                <p><i class="fa-solid fa-gift rotating-icon"></i> Spot Booking Offers Available</p>
-                <p><i class="fa-solid fa-tag rotating-icon"></i> Book Now & Get Early Bird Discounts</p>
-                <p><i class="fa-solid fa-credit-card rotating-icon"></i> Exclusive Flexi Payment Plans</p>
+          <div class="we-promise-section">
+            <h3 class="we-promise-title">We Promise</h3>
+            <div class="promise-items">
+              <div class="promise-item">
+                <div class="promise-icon">
+                  <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <p class="promise-text">Instant Call Back</p>
               </div>
-              <div class="promo-pricing">
-                <p>1, 2 & 3 BHK Homes In Nature Starts At</p>
-                <p class="price-range">₹ 65.45 L - ₹ 125.27 L</p>
+              <div class="promise-item">
+                <div class="promise-icon">
+                  <i class="fa-solid fa-car"></i>
+                </div>
+                <p class="promise-text">Free Site Visit</p>
               </div>
-              <button type="button" class="btn-request-brochure" data-open-popup="enquiry">
-                Request Brochure
-              </button>
+              <div class="promise-item">
+                <div class="promise-icon">
+                  <i class="fa-solid fa-indian-rupee-sign"></i>
+                </div>
+                <p class="promise-text">Unmatched Price</p>
+              </div>
             </div>
           </div>
           <div class="popup-contact-favicons">
@@ -823,12 +794,8 @@
         </div>
         <div class="popup-form-section">
           <div class="popup-header-bar">
-            <div class="popup-logo-small">
-              <img src="assets/logo@logo.png" alt="Ashiana Housing logo">
-              <p class="logo-tagline-small">you are in safe hands</p>
-            </div>
             <div class="popup-header-title">
-              <h2>Register Here And Avail The <strong>Best Offers!!</strong></h2>
+              <h2>Register Here And Avail The <strong class="best-offers-highlight">Best Offers!!</strong></h2>
             </div>
           </div>
           <form id="popupEnquiryForm" novalidate>
@@ -876,21 +843,55 @@
   </div>
 
   <!-- Virtual Tour Modal -->
-  <div id="virtualTourModal" class="virtual-tour-modal" role="dialog" aria-modal="true" aria-label="Virtual Tour">
+  <div id="virtualTourModal" class="virtual-tour-modal" role="dialog" aria-modal="true" aria-label="Virtual Tour Request">
     <div class="virtual-tour-overlay"></div>
     <div class="virtual-tour-container">
       <button class="virtual-tour-close" aria-label="Close virtual tour" id="virtualTourCloseBtn">&times;</button>
       <div class="virtual-tour-content">
-        <h2>Virtual Tour</h2>
-        <div class="virtual-tour-video-wrapper">
-          <iframe 
-            id="virtualTourVideo" 
-            src="" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen
-            title="Ashiana Amodh Virtual Tour">
-          </iframe>
+        <h2>Request Virtual Tour</h2>
+        <p class="virtual-tour-intro">Fill out the form below and our team will send you access to the virtual tour experience.</p>
+        <form id="virtualTourForm" novalidate>
+          <div class="form-group">
+            <label for="vtName">Full Name *</label>
+            <input type="text" id="vtName" name="name" required placeholder="Enter your full name">
+          </div>
+          <div class="form-group">
+            <label for="vtEmail">Email Address *</label>
+            <input type="email" id="vtEmail" name="email" required placeholder="your.email@example.com">
+          </div>
+          <div class="form-group phone-group">
+            <label for="vtPhone">Phone Number *</label>
+            <div class="phone-input-wrapper">
+              <select id="vtCountryCode" name="country_code" class="country-code">
+                <option value="+91" selected>India (+91)</option>
+                <option value="+1">USA (+1)</option>
+                <option value="+44">UK (+44)</option>
+              </select>
+              <input type="tel" id="vtPhone" name="phone" required placeholder="Enter phone number">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="vtMessage">Message (Optional)</label>
+            <textarea id="vtMessage" name="message" rows="4" placeholder="Any specific areas you'd like to see in the virtual tour?"></textarea>
+          </div>
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="vtConsent" name="consent" required>
+              <span class="checkbox-text">I consent to receive the virtual tour link and authorize Ashiana Amodh to contact me about this request.</span>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Request Virtual Tour</button>
+          </div>
+          <div id="virtualTourFormAlert" class="form-alert" role="status"></div>
+        </form>
+        <div id="virtualTourSuccessMessage" class="virtual-tour-success" style="display: none;">
+          <div class="success-icon">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h3>Thank You!</h3>
+          <p>Your virtual tour request has been submitted successfully. Our team will send you the virtual tour link shortly.</p>
+          <button type="button" class="btn primary" id="closeVirtualTourAfterSuccess">Close</button>
         </div>
       </div>
     </div>
