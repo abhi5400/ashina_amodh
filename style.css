@@ -2469,8 +2469,8 @@ body.popup-open {
 .popup-container {
   position: relative;
   width: 90%;
-  max-width: 900px;
-  max-height: 85vh;
+  max-width: 1000px;
+  max-height: 90vh;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -2527,8 +2527,8 @@ body.popup-open {
   width: 100%;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
-  max-height: calc(85vh - 60px);
+  overflow: visible;
+  max-height: 90vh;
 }
 
 .popup-promises {
@@ -2675,9 +2675,20 @@ body.popup-open {
 
 .popup-form-section {
   flex: 1;
-  padding: 1rem 1.25rem;
-  overflow: hidden;
+  padding: 1rem 1.25rem 1.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-radius: 0 24px 24px 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.popup-form-section form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   min-height: 0;
 }
 
@@ -3084,8 +3095,11 @@ body.popup-open {
 }
 
 .popup-form-section .form-actions {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  flex-shrink: 0;
 }
 
 .popup-form-section .form-actions .btn {
@@ -3193,9 +3207,9 @@ body.popup-open {
 
 @media (max-width: 768px) {
   .popup-container {
-    width: 90% !important;
-    max-width: 500px !important;
-    max-height: 85vh !important;
+    width: 95% !important;
+    max-width: 550px !important;
+    max-height: 90vh !important;
     height: auto !important;
     border-radius: 16px !important;
     margin: 1rem auto !important;
@@ -3206,7 +3220,8 @@ body.popup-open {
     flex-direction: column;
     flex: 1;
     min-height: 0;
-    overflow: visible;
+    overflow: hidden;
+    max-height: 85vh;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -3302,10 +3317,12 @@ body.popup-open {
 
   .popup-form-section {
     flex: 1;
-    padding: 1.25rem 1rem;
-    overflow-y: visible;
+    padding: 1.25rem 1rem 1.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
+    max-height: 85vh;
   }
 
   .popup-close {
@@ -3723,13 +3740,15 @@ body.popup-open {
 .virtual-tour-container {
   position: relative;
   width: 90%;
-  max-width: 650px;
-  max-height: 85vh;
+  max-width: 700px;
+  max-height: 90vh;
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
   z-index: 10006;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
 }
 
 .virtual-tour-close {
@@ -3763,6 +3782,12 @@ body.popup-open {
   color: #1f1f1f;
   max-width: 600px;
   margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 90vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .virtual-tour-content h2 {
@@ -3857,9 +3882,18 @@ body.popup-open {
   line-height: 1.5;
 }
 
+#virtualTourForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 #virtualTourForm .form-actions {
-  margin-top: 2rem;
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 1.5rem;
   text-align: center;
+  flex-shrink: 0;
 }
 
 #virtualTourFormAlert {
@@ -3901,11 +3935,13 @@ body.popup-open {
 @media (max-width: 768px) {
   .virtual-tour-container {
     width: 95%;
-    max-height: 85vh;
+    max-width: 550px;
+    max-height: 90vh;
   }
 
   .virtual-tour-content {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 1rem 1.5rem;
+    max-height: 90vh;
   }
 
   .virtual-tour-content h2 {
