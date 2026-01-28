@@ -368,10 +368,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('enquiryForm');
   const alertBox = document.getElementById('formAlert');
 
-  // Initialize EmailJS - Replace with your Public Key
+  // Initialize EmailJS
   if (typeof emailjs !== 'undefined') {
-    // Uncomment and add your EmailJS Public Key
-    // emailjs.init('YOUR_PUBLIC_KEY');
+    try {
+      emailjs.init('-veGxRxhZnZ2ZlRwb');
+      console.log('✅ EmailJS initialized successfully');
+    } catch (error) {
+      console.error('❌ EmailJS initialization failed:', error);
+    }
+  } else {
+    console.error('❌ EmailJS library not loaded. Check script tag in index.html');
   }
 
   const validate = data => {
@@ -408,9 +414,9 @@ document.addEventListener('DOMContentLoaded', () => {
     alertBox.textContent = 'Sending your enquiry...';
     alertBox.style.color = '#666';
 
-    // EmailJS Configuration - Replace with your actual IDs
-    const serviceId = 'YOUR_SERVICE_ID'; // Replace with your EmailJS Service ID
-    const templateId = 'YOUR_TEMPLATE_ID'; // Replace with your EmailJS Template ID
+    // EmailJS Configuration
+    const serviceId = 'service_lhjovfi';
+    const templateId = 'template_skd98tq';
 
     // Add timestamp and additional metadata
     const timestamp = new Date().toLocaleString('en-IN', {
@@ -469,18 +475,30 @@ Project: Ashiana Amodh - Senior Living
 
     // Send email using EmailJS
     emailjs.send(serviceId, templateId, templateParams)
-      .then(() => {
+      .then((response) => {
         form.reset();
         alertBox.textContent = 'Thank you! Our team will reach out to you shortly.';
         alertBox.style.color = '#2f855a';
         showToast('Enquiry submitted successfully!');
         
         // Log success (for debugging)
-        console.log('Form submitted successfully:', data);
+        console.log('✅ Contact form submitted successfully!', response);
+        console.log('Response Status:', response.status);
+        console.log('Response Text:', response.text);
       })
       .catch(err => {
-        console.error('EmailJS Error:', err);
-        alertBox.textContent = 'Something went wrong. Please try again or contact us directly.';
+        console.error('❌ EmailJS Error Details:', err);
+        console.error('Error Status:', err.status);
+        console.error('Error Text:', err.text);
+        console.error('Service ID:', serviceId);
+        console.error('Template ID:', templateId);
+        
+        // Show detailed error message
+        let errorMsg = 'Something went wrong. Please try again or contact us directly.';
+        if (err.text) {
+          errorMsg += ` (Error: ${err.text})`;
+        }
+        alertBox.textContent = errorMsg;
         alertBox.style.color = '#c41f24';
         showToast('Submission failed. Please try again.');
       });
@@ -676,21 +694,95 @@ Project: Ashiana Amodh - Senior Living
       // Hide alert
       popupFormAlert.classList.remove('show');
       
-      // Show success message
-      isFormSubmitted = true;
-      popupForm.style.display = 'none';
-      popupSuccessMessage.style.display = 'block';
+      // Show loading state
+      popupFormAlert.textContent = 'Sending your enquiry...';
+      popupFormAlert.style.color = '#666';
+      popupFormAlert.classList.add('show');
       
-      // Log form data (for now, will be connected to EmailJS later)
-      console.log('Form submitted:', {
-        name: data.name,
-        email: data.email || 'Not provided',
-        phone: data.phone,
-        consent: 'Accepted'
+      // Check if EmailJS is available
+      if (typeof emailjs === 'undefined') {
+        popupFormAlert.textContent = 'Email service is currently unavailable.';
+        popupFormAlert.style.color = '#c41f24';
+        return;
+      }
+
+      // EmailJS Configuration
+      const serviceId = 'service_lhjovfi';
+      const templateId = 'template_skd98tq';
+
+      // Add timestamp
+      const timestamp = new Date().toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        dateStyle: 'full',
+        timeStyle: 'long'
       });
-      
-      // Scroll to success message
-      popupSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Prepare template parameters
+      const templateParams = {
+        from_name: data.name,
+        from_email: data.email || 'Not provided',
+        phone: data.phone,
+        message: 'Popup Form Submission - User requested callback',
+        contact_time: 'Not specified',
+        property_type: 'Not specified',
+        submission_date: timestamp,
+        project_name: 'Ashiana Amodh - Senior Living',
+        source: 'Popup Enquiry Form',
+        email_body: `
+NEW ENQUIRY FROM ASHIANA AMODH POPUP FORM
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name: ${data.name}
+Email: ${data.email || 'Not provided'}
+Phone: ${data.phone}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SUBMISSION DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Submitted on: ${timestamp}
+Source: Popup Enquiry Form
+Project: Ashiana Amodh - Senior Living
+Consent: Accepted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `.trim()
+      };
+
+      // Send email using EmailJS
+      emailjs.send(serviceId, templateId, templateParams)
+        .then((response) => {
+          // Show success message
+          isFormSubmitted = true;
+          popupForm.style.display = 'none';
+          popupSuccessMessage.style.display = 'block';
+          popupFormAlert.classList.remove('show');
+          
+          // Scroll to success message
+          popupSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          
+          console.log('✅ Popup form submitted successfully!', response);
+          console.log('Response Status:', response.status);
+          console.log('Response Text:', response.text);
+        })
+        .catch(err => {
+          console.error('❌ EmailJS Error Details:', err);
+          console.error('Error Status:', err.status);
+          console.error('Error Text:', err.text);
+          console.error('Service ID:', serviceId);
+          console.error('Template ID:', templateId);
+          
+          // Show detailed error message
+          let errorMsg = 'Something went wrong. Please try again or contact us directly.';
+          if (err.text) {
+            errorMsg += ` (Error: ${err.text})`;
+          }
+          popupFormAlert.textContent = errorMsg;
+          popupFormAlert.style.color = '#c41f24';
+        });
     });
   }
 
@@ -1053,21 +1145,95 @@ Project: Ashiana Amodh - Senior Living
       // Hide alert
       virtualTourFormAlert.classList.remove('show');
       
-      // Show success message
-      virtualTourForm.style.display = 'none';
-      virtualTourSuccessMessage.style.display = 'block';
+      // Show loading state
+      virtualTourFormAlert.textContent = 'Sending your request...';
+      virtualTourFormAlert.style.color = '#666';
+      virtualTourFormAlert.classList.add('show');
       
-      // Log form data (for now, will be connected to EmailJS later)
-      console.log('Virtual Tour Form submitted:', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        message: data.message || 'Not provided',
-        consent: 'Accepted'
+      // Check if EmailJS is available
+      if (typeof emailjs === 'undefined') {
+        virtualTourFormAlert.textContent = 'Email service is currently unavailable.';
+        virtualTourFormAlert.style.color = '#c41f24';
+        return;
+      }
+
+      // EmailJS Configuration
+      const serviceId = 'service_lhjovfi';
+      const templateId = 'template_skd98tq';
+
+      // Add timestamp
+      const timestamp = new Date().toLocaleString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        dateStyle: 'full',
+        timeStyle: 'long'
       });
-      
-      // Scroll to success message
-      virtualTourSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Prepare template parameters
+      const templateParams = {
+        from_name: data.name,
+        from_email: data.email,
+        phone: data.phone,
+        message: data.message || 'Virtual Tour Request',
+        contact_time: 'Not specified',
+        property_type: 'Not specified',
+        submission_date: timestamp,
+        project_name: 'Ashiana Amodh - Senior Living',
+        source: 'Virtual Tour Request Form',
+        email_body: `
+NEW VIRTUAL TOUR REQUEST FROM ASHIANA AMODH WEBSITE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone}
+Message: ${data.message || 'Virtual Tour Request'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SUBMISSION DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Submitted on: ${timestamp}
+Source: Virtual Tour Request Form
+Project: Ashiana Amodh - Senior Living
+Consent: Accepted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        `.trim()
+      };
+
+      // Send email using EmailJS
+      emailjs.send(serviceId, templateId, templateParams)
+        .then((response) => {
+          // Show success message
+          virtualTourForm.style.display = 'none';
+          virtualTourSuccessMessage.style.display = 'block';
+          virtualTourFormAlert.classList.remove('show');
+          
+          // Scroll to success message
+          virtualTourSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          
+          console.log('✅ Virtual Tour Form submitted successfully!', response);
+          console.log('Response Status:', response.status);
+          console.log('Response Text:', response.text);
+        })
+        .catch(err => {
+          console.error('❌ EmailJS Error Details:', err);
+          console.error('Error Status:', err.status);
+          console.error('Error Text:', err.text);
+          console.error('Service ID:', serviceId);
+          console.error('Template ID:', templateId);
+          
+          // Show detailed error message
+          let errorMsg = 'Something went wrong. Please try again or contact us directly.';
+          if (err.text) {
+            errorMsg += ` (Error: ${err.text})`;
+          }
+          virtualTourFormAlert.textContent = errorMsg;
+          virtualTourFormAlert.style.color = '#c41f24';
+        });
     });
   }
 
